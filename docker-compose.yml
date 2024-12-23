@@ -1,9 +1,11 @@
 version: "3"
 services:
   news-bot:
-    build: .
+    build:
+      context: https://github.com/Ansub/phidata-ai-news-slack-bot.git
+      dockerfile: Dockerfile
+    network_mode: "umbrel_main_network"
     restart: always
-    env_file: .envrc
-    volumes:
-      - ./src:/app/src
-      - ./.envrc:/app/.envrc
+    environment:
+      - SLACK_TOKEN=${SLACK_TOKEN}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
