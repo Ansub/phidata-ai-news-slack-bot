@@ -4,7 +4,7 @@ services:
     build:
       context: https://github.com/Ansub/phidata-ai-news-slack-bot.git
       dockerfile: Dockerfile
-    network_mode: "umbrel_main_network"
+    network_mode: "container:umbrel_main_network"
     restart: always
     environment:
       - SLACK_TOKEN=${SLACK_TOKEN}
