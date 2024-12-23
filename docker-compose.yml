@@ -1,0 +1,9 @@
+version: "3"
+services:
+  news-bot:
+    build: .
+    restart: always
+    env_file: .envrc
+    volumes:
+      - ./src:/app/src
+      - ./.envrc:/app/.envrc

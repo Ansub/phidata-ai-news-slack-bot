@@ -1,0 +1,6 @@
+phidata
+python-dotenv
+openai
+duckduckgo-search
+packaging
+slack-sdk
