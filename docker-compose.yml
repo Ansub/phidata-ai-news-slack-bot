@@ -9,7 +9,7 @@ services:
       /bin/sh -c '
       while true; do
         echo "[$(date -u)] Checking time: $(date -u +%H:%M)"
-        if [ "$(date -u +%H:%M)" = "12:20" ]; then
+        if [ "$(date -u +%H:%M)" = "12:25" ]; then
           echo "[$(date -u)] Starting news bot..."
           python src/slack_news_bot.py
           echo "[$(date -u)] News bot finished"
