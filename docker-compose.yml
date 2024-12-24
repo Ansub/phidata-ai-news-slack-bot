@@ -4,8 +4,6 @@ services:
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - SLACK_TOKEN=${SLACK_TOKEN}
-    volumes:
-      - ./.env:/app/.env
     restart: always
     # Run every 2 minutes
     entrypoint: >
