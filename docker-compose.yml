@@ -1,10 +1,15 @@
-version: "3"
 services:
-  news-bot:
-    build:
-      context: https://github.com/Ansub/phidata-ai-news-slack-bot.git
-      dockerfile: Dockerfile
-    restart: always
+  slack-news-bot:
+    build: .
     environment:
-      - SLACK_TOKEN=${SLACK_TOKEN}
       - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - SLACK_TOKEN=${SLACK_TOKEN}
+    volumes:
+      - ./.env:/app/.env
+    restart: always
+    # Run every 2 minutes
+    entrypoint: >
+      sh -c "while true; do
+             python src/slack_news_bot.py;
+             sleep 120;
+             done"

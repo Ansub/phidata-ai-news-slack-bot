@@ -1,32 +1,21 @@
-FROM python:3.9-slim-bullseye
+# Use Python 3.11 as base image
+FROM python:3.11-slim
 
-# Install necessary packages (cron, git, etc.)
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    cron \
-    git \
-    && rm -rf /var/lib/apt/lists/*
-
-# Set the working directory
+# Set working directory
 WORKDIR /app
 
-# Create necessary directories and files
-RUN mkdir -p /app/src && \
-    touch /var/log/cron.log
+# Copy requirements first to leverage Docker cache
+COPY requirements.txt .
 
-# Copy all project files into the container
-COPY . /app/
-
-# Install Python dependencies
+# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Export all environment variables to a file
-RUN printenv | grep -v "no_proxy" >> /etc/environment
+# Copy the rest of the application
+COPY src/ src/
+COPY .env .
 
-# Add the cron job
-RUN echo "*/2 * * * * . /etc/environment && /usr/local/bin/python3 /app/src/slack_news_bot.py >> /var/log/cron.log 2>&1" > /etc/cron.d/news-bot-cron && \
-    chmod 0644 /etc/cron.d/news-bot-cron && \
-    crontab /etc/cron.d/news-bot-cron
+# Set the Python path to include src directory
+ENV PYTHONPATH=/app
 
-# Start the cron service in the foreground
-CMD ["cron", "-f"]
+# Run the bot
+CMD ["python", "src/slack_news_bot.py"]
