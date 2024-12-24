@@ -14,7 +14,7 @@ RUN mkdir -p /app/src && \
 COPY . /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
-RUN echo "35 8 * * * . /app/.envrc && python /app/src/slack_news_bot.py >> /var/log/cron.log 2>&1" > /etc/cron.d/news-bot-cron && \
+RUN echo "20 8 * * * python /app/src/slack_news_bot.py >> /var/log/cron.log 2>&1" > /etc/cron.d/news-bot-cron && \
     chmod 0644 /etc/cron.d/news-bot-cron && \
     crontab /etc/cron.d/news-bot-cron
 
