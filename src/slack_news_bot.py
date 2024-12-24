@@ -23,7 +23,7 @@ slack_news_bot = Agent(
 )
 
 current_date = datetime.now().strftime("%Y-%m-%d")
-message = f"""Search for AI news from the last 24 hours only and send to #bot-test.
+message = f"""Search for AI news from the last 24 hours only and send to #tech-updates.
 
 Search for these categories (ONLY from the last 24 hours):
 - New AI model releases and announcements
