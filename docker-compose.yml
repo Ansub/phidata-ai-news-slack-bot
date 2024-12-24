@@ -5,12 +5,12 @@ services:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - SLACK_TOKEN=${SLACK_TOKEN}
     restart: always
-    entrypoint: >
-      sh -c "while true; do
-             current_time=\$(date -u +%H:%M);
-             if [ \"\$current_time\" = \"11:30\" ]; then
-               echo \"[$(date -u)] Running news bot at 11:30 UTC...\";
-               python src/slack_news_bot.py;
-             fi;
-             sleep 60;
-             done"
+    command: >
+      /bin/sh -c '
+      while true; do
+        current_time=$(date -u +%H:%M)
+        if [ "$current_time" = "12:00" ]; then
+          python src/slack_news_bot.py
+        fi
+        sleep 60
+      done'
